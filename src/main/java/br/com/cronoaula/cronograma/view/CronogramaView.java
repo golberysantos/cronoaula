@@ -42,7 +42,7 @@ public class CronogramaView extends JFrame {
 
 		controller = new CronogramaController();
 
-		setTitle("CronoAula");
+		setTitle("CronoAula. By Golbery Santos");
 		setSize(600, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
