@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -48,6 +49,9 @@ public class CronogramaView extends JFrame {
         controller = new CronogramaController();
 
         setTitle("CronoAula");
+        setIconImage(new ImageIcon(
+        	    getClass().getResource("/icon/cronoaula_icon.ico")
+        	).getImage());
         setSize(750, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
