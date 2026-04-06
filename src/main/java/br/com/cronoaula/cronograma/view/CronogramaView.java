@@ -23,155 +23,195 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import br.com.cronoaula.cronograma.controller.CronogramaController;
 import br.com.cronoaula.cronograma.model.Cronograma;
 
 public class CronogramaView extends JFrame {
 
-	private JTextField txtCargaTotal;
-	private JTextField txtCargaAula;
-	private JTextField txtArquivo;
-	private JTextField txtDataInicio;
+    private JTextField txtCargaTotal;
+    private JTextField txtCargaAula;
+    private JTextField txtArquivo;
+    private JTextField txtDataInicio;
 
-	private JCheckBox seg, ter, qua, qui, sex, sab;
+    private JCheckBox seg, ter, qua, qui, sex, sab;
 
-	private JTextArea resultado;
+    private JTextArea resultado;
 
-	private CronogramaController controller;
+    private CronogramaController controller;
 
-	public CronogramaView() {
+    public CronogramaView() {
 
-		controller = new CronogramaController();
+        controller = new CronogramaController();
 
-		setTitle("CronoAula. By Golbery Santos");
-		setSize(600, 600);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+        setTitle("CronoAula");
+        setSize(750, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout(10, 10));
 
-		JPanel painel = new JPanel(new GridLayout(0, 2, 10, 10));
-		painel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        // =========================
+        // TÍTULO
+        // =========================
+        JLabel titulo = new JLabel("CronoAula - Gerador de Cronograma");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+        titulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-		txtCargaTotal = new JTextField();
-		txtCargaAula = new JTextField();
-		txtArquivo = new JTextField();
-		txtDataInicio = new JTextField("2026-01-01");
+        add(titulo, BorderLayout.NORTH);
 
-		painel.add(new JLabel("Carga Total:"));
-		painel.add(txtCargaTotal);
+        // =========================
+        // PAINEL PRINCIPAL
+        // =========================
+        JPanel painelPrincipal = new JPanel(new BorderLayout(15, 15));
+        painelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 15, 15, 15));
 
-		painel.add(new JLabel("Carga por Aula:"));
-		painel.add(txtCargaAula);
+        // =========================
+        // PAINEL DE DADOS
+        // =========================
+        JPanel painelDados = new JPanel(new GridLayout(0, 2, 10, 10));
+        painelDados.setBorder(BorderFactory.createTitledBorder("Dados do Curso"));
 
-		painel.add(new JLabel("Data Início:"));
-		painel.add(txtDataInicio);
+        txtCargaTotal = new JTextField();
+        txtCargaAula = new JTextField();
+        txtArquivo = new JTextField();
+        txtDataInicio = new JTextField("2026-01-01");
 
-		painel.add(new JLabel("Arquivo Excel:"));
-		painel.add(txtArquivo);
+        painelDados.add(new JLabel("Carga Horária Total:"));
+        painelDados.add(txtCargaTotal);
 
-		JButton btnSelecionar = new JButton("Selecionar Excel");
-		painel.add(btnSelecionar);
+        painelDados.add(new JLabel("Carga por Aula:"));
+        painelDados.add(txtCargaAula);
 
-		btnSelecionar.addActionListener(e -> {
-			JFileChooser chooser = new JFileChooser();
-			if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				txtArquivo.setText(chooser.getSelectedFile().getAbsolutePath());
-			}
-		});
+        painelDados.add(new JLabel("Data de Início:"));
+        painelDados.add(txtDataInicio);
 
-		seg = new JCheckBox("Seg");
-		ter = new JCheckBox("Ter");
-		qua = new JCheckBox("Qua");
-		qui = new JCheckBox("Qui");
-		sex = new JCheckBox("Sex");
-		sab = new JCheckBox("Sab");
+        painelDados.add(new JLabel("Arquivo Excel:"));
 
-		painel.add(seg);
-		painel.add(ter);
-		painel.add(qua);
-		painel.add(qui);
-		painel.add(sex);
-		painel.add(sab);
+        JPanel painelArquivo = new JPanel(new BorderLayout(5, 0));
+        JButton btnSelecionar = new JButton("Selecionar");
+        painelArquivo.add(txtArquivo, BorderLayout.CENTER);
+        painelArquivo.add(btnSelecionar, BorderLayout.EAST);
 
-		JButton btnCalcular = new JButton("Calcular");
+        painelDados.add(painelArquivo);
 
-		resultado = new JTextArea();
-		
-		resultado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		resultado.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        btnSelecionar.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                txtArquivo.setText(chooser.getSelectedFile().getAbsolutePath());
+            }
+        });
 
-		/*
-		 * add(painel, BorderLayout.NORTH); add(btnCalcular, BorderLayout.CENTER);
-		 * add(new JScrollPane(resultado), BorderLayout.SOUTH);
-		 */
+        // =========================
+        // PAINEL DIAS DA SEMANA
+        // =========================
+        JPanel painelDias = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
+        painelDias.setBorder(BorderFactory.createTitledBorder("Dias da Semana"));
 
-		JPanel painelCentro = new JPanel(new BorderLayout());
+        seg = new JCheckBox("Seg");
+        ter = new JCheckBox("Ter");
+        qua = new JCheckBox("Qua");
+        qui = new JCheckBox("Qui");
+        sex = new JCheckBox("Sex");
+        sab = new JCheckBox("Sab");
 
-		// painelCentro.add(btnCalcular, BorderLayout.NORTH);
-		JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelDias.add(seg);
+        painelDias.add(ter);
+        painelDias.add(qua);
+        painelDias.add(qui);
+        painelDias.add(sex);
+        painelDias.add(sab);
 
-		btnCalcular.setPreferredSize(new Dimension(140, 40));
-		btnCalcular.setFocusPainted(false);
-		
-		painelBotao.add(btnCalcular);
-		painelCentro.add(painelBotao, BorderLayout.NORTH);
-		painelCentro.add(new JScrollPane(resultado), BorderLayout.CENTER);
+        // =========================
+        // BOTÃO
+        // =========================
+        JButton btnCalcular = new JButton("Gerar Cronograma");
+        btnCalcular.setPreferredSize(new Dimension(180, 40));
+        btnCalcular.setFocusPainted(false);
 
-		add(painel, BorderLayout.NORTH);
-		add(painelCentro, BorderLayout.CENTER);
+        JPanel painelBotao = new JPanel();
+        painelBotao.add(btnCalcular);
 
-		btnCalcular.addActionListener(e -> calcular());
-		
-		JPanel painelDados = new JPanel(new GridLayout(0, 2, 10, 10));
-		painelDados.setBorder(BorderFactory.createTitledBorder("Dados do Curso"));
-	}
+        // =========================
+        // RESULTADO
+        // =========================
+        resultado = new JTextArea();
+        resultado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        resultado.setEditable(false);
+        resultado.setLineWrap(true);
+        resultado.setWrapStyleWord(true);
 
-	private void calcular() {
+        JScrollPane scroll = new JScrollPane(resultado);
+        scroll.setBorder(BorderFactory.createTitledBorder("Cronograma Gerado"));
 
-		try {
+        // =========================
+        // ORGANIZAÇÃO CENTRAL
+        // =========================
+        JPanel topo = new JPanel(new BorderLayout(10, 10));
+        topo.add(painelDados, BorderLayout.NORTH);
+        topo.add(painelDias, BorderLayout.CENTER);
+        topo.add(painelBotao, BorderLayout.SOUTH);
 
-			int cargaTotal = Integer.parseInt(txtCargaTotal.getText());
-			int cargaAula = Integer.parseInt(txtCargaAula.getText());
+        painelPrincipal.add(topo, BorderLayout.NORTH);
+        painelPrincipal.add(scroll, BorderLayout.CENTER);
 
-			LocalDate dataInicio = LocalDate.parse(txtDataInicio.getText());
+        add(painelPrincipal, BorderLayout.CENTER);
 
-			Set<DayOfWeek> dias = new HashSet<>();
+        // =========================
+        // AÇÃO BOTÃO
+        // =========================
+        btnCalcular.addActionListener(e -> calcular());
+    }
 
-			if (seg.isSelected())
-				dias.add(DayOfWeek.MONDAY);
-			if (ter.isSelected())
-				dias.add(DayOfWeek.TUESDAY);
-			if (qua.isSelected())
-				dias.add(DayOfWeek.WEDNESDAY);
-			if (qui.isSelected())
-				dias.add(DayOfWeek.THURSDAY);
-			if (sex.isSelected())
-				dias.add(DayOfWeek.FRIDAY);
-			if (sab.isSelected())
-				dias.add(DayOfWeek.SATURDAY);
+    private void calcular() {
 
-			if (dias.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Selecione ao menos um dia.");
-				return;
-			}
+        try {
 
-			List<Cronograma> aulas = controller.gerar(txtArquivo.getText(), dataInicio, cargaTotal, cargaAula, dias);
+            int cargaTotal = Integer.parseInt(txtCargaTotal.getText());
+            int cargaAula = Integer.parseInt(txtCargaAula.getText());
+            LocalDate dataInicio = LocalDate.parse(txtDataInicio.getText());
 
-			resultado.setText("");
+            Set<DayOfWeek> dias = new HashSet<>();
 
-			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            if (seg.isSelected()) dias.add(DayOfWeek.MONDAY);
+            if (ter.isSelected()) dias.add(DayOfWeek.TUESDAY);
+            if (qua.isSelected()) dias.add(DayOfWeek.WEDNESDAY);
+            if (qui.isSelected()) dias.add(DayOfWeek.THURSDAY);
+            if (sex.isSelected()) dias.add(DayOfWeek.FRIDAY);
+            if (sab.isSelected()) dias.add(DayOfWeek.SATURDAY);
 
-			for (Cronograma aula : aulas) {
-				resultado.append(aula.getData().getDayOfWeek() + " - " + aula.getData().format(fmt) + "\n");
-			}
+            if (dias.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Selecione ao menos um dia.");
+                return;
+            }
 
-			if (!aulas.isEmpty()) {
-				resultado.append("\nInício: " + aulas.get(0).getData().format(fmt));
-				resultado.append("\nFim: " + aulas.get(aulas.size() - 1).getData().format(fmt));
-			}
+            List<Cronograma> aulas = controller.gerar(
+                    txtArquivo.getText(),
+                    dataInicio,
+                    cargaTotal,
+                    cargaAula,
+                    dias
+            );
 
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
-		}
-	}
+            resultado.setText("");
+
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            for (Cronograma aula : aulas) {
+                resultado.append(
+                        aula.getData().getDayOfWeek() + " - " +
+                        aula.getData().format(fmt) + "\n"
+                );
+            }
+
+            if (!aulas.isEmpty()) {
+                resultado.append("\nInício: " + aulas.get(0).getData().format(fmt));
+                resultado.append("\nFim: " + aulas.get(aulas.size()-1).getData().format(fmt));
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+        }
+    }
 }
