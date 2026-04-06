@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 
 import br.com.cronoaula.cronograma.controller.CronogramaController;
 import br.com.cronoaula.cronograma.model.Cronograma;
+import br.com.cronoaula.cronograma.service.CronogramaExcelExporter;
 
 public class CronogramaView extends JFrame {
 
@@ -133,7 +134,7 @@ public class CronogramaView extends JFrame {
 
         JPanel painelBotao = new JPanel();
         painelBotao.add(btnCalcular);
-
+        
         // =========================
         // RESULTADO
         // =========================
@@ -188,6 +189,48 @@ public class CronogramaView extends JFrame {
 
         // Adiciona ao frame
         add(statusBar, BorderLayout.SOUTH);	
+        
+        JButton btnExportar = new JButton("Exportar Excel");
+        btnExportar.setPreferredSize(new Dimension(160, 35));
+        painelBotao.add(btnExportar);
+        
+        btnExportar.addActionListener(e -> {
+
+            if (resultado.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Gere o cronograma primeiro.");
+                return;
+            }
+
+            JFileChooser chooser = new JFileChooser();
+            chooser.setSelectedFile(new java.io.File("cronograma.xlsx"));
+
+            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+                String caminho = chooser.getSelectedFile().getAbsolutePath();
+
+                if (!caminho.endsWith(".xlsx")) {
+                    caminho += ".xlsx";
+                }
+
+                try {
+                    List<Cronograma> aulas = controller.gerar(
+                            txtArquivo.getText(),
+                            LocalDate.parse(txtDataInicio.getText()),
+                            Integer.parseInt(txtCargaTotal.getText()),
+                            Integer.parseInt(txtCargaAula.getText()),
+                            getDiasSelecionados()
+                    );
+
+                    CronogramaExcelExporter.exportar(aulas, caminho);
+
+                    JOptionPane.showMessageDialog(this, "Arquivo exportado com sucesso!");
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao exportar: " + ex.getMessage());
+                }
+            }
+        });
+
     }
 
     private void calcular() {
@@ -234,10 +277,25 @@ public class CronogramaView extends JFrame {
             if (!aulas.isEmpty()) {
                 resultado.append("\nInício: " + aulas.get(0).getData().format(fmt));
                 resultado.append("\nFim: " + aulas.get(aulas.size()-1).getData().format(fmt));
+                resultado.append("\nTotal de aulas: " + aulas.size());
             }
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
         }
+    }
+    
+    private Set<DayOfWeek> getDiasSelecionados() {
+
+        Set<DayOfWeek> dias = new HashSet<>();
+
+        if (seg.isSelected()) dias.add(DayOfWeek.MONDAY);
+        if (ter.isSelected()) dias.add(DayOfWeek.TUESDAY);
+        if (qua.isSelected()) dias.add(DayOfWeek.WEDNESDAY);
+        if (qui.isSelected()) dias.add(DayOfWeek.THURSDAY);
+        if (sex.isSelected()) dias.add(DayOfWeek.FRIDAY);
+        if (sab.isSelected()) dias.add(DayOfWeek.SATURDAY);
+
+        return dias;
     }
 }

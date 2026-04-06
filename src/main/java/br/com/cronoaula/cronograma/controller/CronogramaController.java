@@ -2,6 +2,7 @@ package br.com.cronoaula.cronograma.controller;
 
 import br.com.cronoaula.cronograma.model.Cronograma;
 import br.com.cronoaula.cronograma.repository.CronogramaRepository;
+import br.com.cronoaula.cronograma.service.CronogramaExcelExporter;
 import br.com.cronoaula.cronograma.service.CronogramaService;
 
 import java.time.DayOfWeek;
@@ -37,4 +38,11 @@ public class CronogramaController {
                 naoLetivos
         );
     }
+    
+    
+    public void exportarExcel(List<Cronograma> aulas, String caminho) {
+        CronogramaExcelExporter.exportar(aulas, caminho);
+    }
+    
+    
 }
