@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -47,7 +48,8 @@ public class CronogramaView extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		JPanel painel = new JPanel(new GridLayout(0, 2));
+		JPanel painel = new JPanel(new GridLayout(0, 2, 10, 10));
+		painel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
 		txtCargaTotal = new JTextField();
 		txtCargaAula = new JTextField();
@@ -115,6 +117,9 @@ public class CronogramaView extends JFrame {
 		add(painelCentro, BorderLayout.CENTER);
 
 		btnCalcular.addActionListener(e -> calcular());
+		
+		JPanel painelDados = new JPanel(new GridLayout(0, 2, 10, 10));
+		painelDados.setBorder(BorderFactory.createTitledBorder("Dados do Curso"));
 	}
 
 	private void calcular() {
