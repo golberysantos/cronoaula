@@ -3,6 +3,7 @@ package br.com.cronoaula.cronograma.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -95,6 +96,9 @@ public class CronogramaView extends JFrame {
 		JButton btnCalcular = new JButton("Calcular");
 
 		resultado = new JTextArea();
+		
+		resultado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		resultado.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		/*
 		 * add(painel, BorderLayout.NORTH); add(btnCalcular, BorderLayout.CENTER);
