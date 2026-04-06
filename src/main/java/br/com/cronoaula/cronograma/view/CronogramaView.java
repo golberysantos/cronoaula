@@ -1,6 +1,7 @@
 package br.com.cronoaula.cronograma.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -162,6 +163,31 @@ public class CronogramaView extends JFrame {
         // AÇÃO BOTÃO
         // =========================
         btnCalcular.addActionListener(e -> calcular());
+        
+        
+        
+     // =========================
+        // BARRA DE STATUS
+        // =========================
+        JPanel statusBar = new JPanel(new BorderLayout());
+        statusBar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
+
+        // Texto central
+        JLabel statusCentro = new JLabel("By Golbery Santos");
+        statusCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        statusCentro.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+        // Versão (lado direito)
+        JLabel versao = new JLabel("v1.0");
+        versao.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        versao.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
+        // Adicionando na barra
+        statusBar.add(statusCentro, BorderLayout.CENTER);
+        statusBar.add(versao, BorderLayout.EAST);
+
+        // Adiciona ao frame
+        add(statusBar, BorderLayout.SOUTH);	
     }
 
     private void calcular() {
