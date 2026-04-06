@@ -105,6 +105,8 @@ public class CronogramaView extends JFrame {
 		JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		btnCalcular.setPreferredSize(new Dimension(120, 35));
+		btnCalcular.setFocusPainted(false);
+		btnCalcular.setFocusPainted(false);
 		painelBotao.add(btnCalcular);
 		painelCentro.add(painelBotao, BorderLayout.NORTH);
 		painelCentro.add(new JScrollPane(resultado), BorderLayout.CENTER);
