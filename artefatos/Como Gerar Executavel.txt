@@ -1,0 +1,180 @@
+Perfeito — agora você vai transformar seu sistema **CronoAula** em um executável 👍
+Vou te mostrar o caminho **mais profissional e funcional hoje**.
+
+---
+
+# 🧩 ✔️ ETAPA 1 — Gerar o `.jar` executável
+
+Como você já está usando **Maven**, vamos ajustar o `pom.xml`.
+
+---
+
+## 📦 🔧 Adicione isso no `pom.xml`
+
+```xml
+<build>
+    <plugins>
+
+        <!-- Define a classe principal -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.3.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>br.com.cronoaula.appcronoaula.AppCronoAula</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+
+        <!-- Empacota tudo (dependências incluídas) -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.6.0</version>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <archive>
+                    <manifest>
+                        <mainClass>br.com.cronoaula.appcronoaula.AppCronoAula</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+    </plugins>
+</build>
+```
+
+---
+
+## ▶️ Gerar o JAR
+
+No **Eclipse IDE**:
+
+1. Clique com botão direito no projeto
+2. Vá em:
+
+```plaintext
+Run As → Maven build
+```
+
+3. Em **Goals**, digite:
+
+```plaintext
+clean package
+```
+
+4. Clique em **Run**
+
+---
+
+## 📁 Resultado
+
+Vai gerar:
+
+```plaintext
+target/
+    cronoaula-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+
+👉 Esse já é executável
+
+---
+
+## ▶️ Testar
+
+Dê duplo clique ou rode:
+
+```bash
+java -jar cronoaula-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+
+---
+
+# 🚀 ✔️ ETAPA 2 — Gerar `.exe` (Windows)
+
+Para deixar profissional mesmo, use:
+
+👉 **Launch4j**
+
+---
+
+## 🔧 Passo a passo
+
+1. Baixe o Launch4j
+2. Abra o programa
+
+---
+
+## 📌 Configure:
+
+* **Output file:**
+
+```plaintext
+CronoAula.exe
+```
+
+* **Jar:**
+
+```plaintext
+cronoaula-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+
+* **Main class:**
+
+```plaintext
+br.com.cronoaula.appcronoaula.AppCronoAula
+```
+
+* Marque:
+  ✔ `Stay alive`
+  ✔ `GUI application`
+
+---
+
+## ▶️ Clique em:
+
+```plaintext
+Build Wrapper
+```
+
+---
+
+# 🎯 Resultado final
+
+Você terá:
+
+✔ `.jar` executável
+✔ `.exe` profissional
+✔ Sistema pronto para distribuição
+
+---
+
+# 💡 Próximo nível (se quiser)
+
+Posso te ajudar a:
+
+* Criar **instalador (.msi)**
+* Adicionar **ícone ao .exe**
+* Incluir **Java embutido (não precisa instalar)**
+* Criar versão para Linux/Mac
+
+---
+
+Se quiser deixar nível produto comercial:
+
+👉 diga: **“quero instalador profissional”**
